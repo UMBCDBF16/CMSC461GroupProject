@@ -1,0 +1,25 @@
+***First normal form***
+Office(-name-, city, sq_ft)
+Agreement(-ident-, cost, endDate)
+Agency(-agency_id-, name, address, city, phone)
+RentParties(-agency_id-, -agreement_id-)
+
+
+***Second normal form***
+Office(-name-, city, sq_ft)
+Agreement(-ident-, cost, endDate)
+Agency(-agency_id-, name, address, city, phone)
+RentParties(-agency_id-, -agreement_id-)
+
+(Non key attributes assumed to be generic, for example, Agency.address is assumed to be just a street, where multiple cities can have a street with the same name)
+
+
+***Third normal form***
+Office(-name-, city, sq_ft)
+Agreement(-ident-, cost, endDate)
+Agency(-agency_id-, name, address, city, phone)
+RentParties(-agency_id-, -agreement_id-)
+
+Office: city and sq_ft do not depend on each other, only on the key (name)
+Agreement: cost and endDate do not depend on each other, only on the key (ident)
+Agency: name, address, city, phone, only dependent on the key (agency_id)
