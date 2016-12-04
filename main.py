@@ -10,7 +10,22 @@ class DBConnection():
         """
         :return: a valid connection object to a sqlite3 database
         """
-        conn = sqlite3.conn(":memory:")
+        conn = sqlite3.connect(":memory:")
+        fd = open('univ.sql', 'r')
+        sqlFile = fd.read()
+        sqlCommands = sqlFile.split(';')
+
+        # Execute every command from the input file
+        for command in sqlCommands:
+            conn.execute(command)
+        fd.close()
+        fd = open('load.sql', 'r')
+        sqlFile = fd.read()
+        sqlCommands = sqlFile.split(';')
+
+        # Execute every command from the input file
+        for command in sqlCommands:
+            conn.execute(command)
         return conn
 
     # parse the csv into data
@@ -73,7 +88,7 @@ class DBConnection():
         input: string
         output: None
         """
-        self.DB_CURSOR.execute("DELETE * FROM ?;", table)
+        self.DB_CURSOR.execute("DELETE * FROM ? ; ", table)
 
     def list_all_tables(self):
         self.DB_CURSOR.execute("SELECT name FROM sqlite_master WHERE type='table';")
@@ -87,6 +102,7 @@ class DBConnection():
         '''
         adds a new record to table
         '''
+        print(table)
         fields = tuple(self.col_names(table))
         print(table, "contains these fields: ", fields)
         entry = input("Please enter all values for new entry (separated by ',') ")
@@ -140,8 +156,9 @@ class ResponseHandler():
         self.db_conn = DBConnection()
 
     def user_select_table(self, command):
+        print("command is ", command)
         self.db_conn.list_all_tables()
-        table = input("Select the table that you would like to ", command)
+        table = input("Select the table that you would like to " +  str(command))
         return table
 
     def respond_to(self, response):
@@ -169,10 +186,10 @@ class ResponseHandler():
 
 def main():
     response_handler = ResponseHandler()
-    response = input("You can update, delete, select, erase, bulk load, or quit")
+    response = input("You can update, delete, select, erase, bulk load, or quit\n")
     while response != "quit":
         response_handler.respond_to(response)
-        response = input("You can update, delete, select, erase, bulk load, or quit")
+        response = input("You can update, delete, select, erase, bulk load, or quit\n")
     print("Thank you for using the database")
 
 main()
