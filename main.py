@@ -79,6 +79,57 @@ class DBConnection():
         self.DB_CURSOR.execute("SELECT name FROM sqlite_master WHERE type='table';")
         print(self.DB_CURSOR.fetchall())
 
+    def col_names(self, table):
+        self.DB_CURSOR.execute("select * from {tbl}". format(tbl=table))
+        return [member[0] for member in self.DB_CURSOR.description]
+
+    def update(self, table):
+        '''
+        adds a new record to table
+        '''
+        fields = tuple(self.col_names(table))
+        print(table, "contains these fields: ", fields)
+        entry = input("Please enter all values for new entry (separated by ',') ")
+        values = tuple([x.strip() for x in entry.split(',')])
+        try:
+            query = "INSERT INTO " + table + str(fields) + " VALUES " + str(values)
+            self.DB_CURSOR.execute(query)
+        except sqlite3.IntegrityError:
+            print("ERROR: ID already exists in PRIMARY KEY column ", str(fields))
+
+    def delete_relation(self, table):
+        '''
+        Prompts user WHERE clause(s) which are then used
+        to delete records. entering 'NULL' for WHERE clause removes all
+        entries, but not the table itself.
+        '''
+        headers = ', '.join(self.col_names(table))
+        print(table, "contains these fields: ", headers)
+        condition = input("Please enter a condition ('NULL' to delete all entries) ")
+        if condition == "NULL":
+            query = "DELETE FROM " + table
+        else:
+            query = 'DELETE FROM ' + table + ' WHERE ' + condition
+        self.DB_CURSOR.execute(query)
+
+        # COMPLETE
+
+    def select(self, table):
+        '''
+        Prompts user for field(s) and optional WHERE clause(s) which are then used
+        to print out records.
+        '''
+        headers = ', '.join(self.col_names(table))
+        print(table, "contains these fields: ", headers)
+        fields = input("Please enter the fields you wish to select (separated by ',') ")
+        condition = input("Please enter a condition ('NULL' to ommit WHERE clause) ")
+        if condition == "NULL":
+            query = "SELECT " + fields + " FROM " + table
+        else:
+            query = 'SELECT ' + fields + ' FROM ' + table + ' WHERE ' + condition
+        self.DB_CURSOR.execute(query)
+        print(self.DB_CURSOR.fetchall())
+
 
 
 class ResponseHandler():
