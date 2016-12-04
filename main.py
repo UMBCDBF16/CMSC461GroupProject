@@ -10,7 +10,7 @@ class DBConnection():
         """
         :return: a valid connection object to a sqlite3 database
         """
-        conn = sqlite3.conn(":memory:")
+        conn = sqlite3.connect(":memory:")
         return conn
 
     # parse the csv into data
@@ -87,6 +87,7 @@ class DBConnection():
         '''
         adds a new record to table
         '''
+        print(table)
         fields = tuple(self.col_names(table))
         print(table, "contains these fields: ", fields)
         entry = input("Please enter all values for new entry (separated by ',') ")
@@ -169,10 +170,10 @@ class ResponseHandler():
 
 def main():
     response_handler = ResponseHandler()
-    response = input("You can update, delete, select, erase, bulk load, or quit")
+    response = input("You can update, delete, select, erase, bulk load, or quit\n")
     while response != "quit":
         response_handler.respond_to(response)
-        response = input("You can update, delete, select, erase, bulk load, or quit")
+        response = input("You can update, delete, select, erase, bulk load, or quit\n")
     print("Thank you for using the database")
 
 main()
