@@ -49,7 +49,6 @@ class DBConnection():
 
 
     # this function creates the queries from the data
-                values.append(item)
     def form_queries(self, data, tablename):
         query_start = "INSERT " + "INTO " + tablename + " VALUES "
 
@@ -80,7 +79,10 @@ class DBConnection():
         relations, tablename = self.parse_csv(csv_file)
         queries = self.form_queries(relations, tablename)
         for query in queries:
-            self.DB_CURSOR.execute(query)
+            try:
+                self.DB_CURSOR.execute(query)
+            except sqlite3.OperationalError:
+                print("Error with query ", query, " skipping query")
 
 
     def list_all_tables(self):
