@@ -49,6 +49,7 @@ class DBConnection():
 
 
     # this function creates the queries from the data
+                values.append(item)
     def form_queries(self, data, tablename):
         query_start = "INSERT " + "INTO " + tablename + " VALUES "
 
@@ -59,16 +60,17 @@ class DBConnection():
         queries = []
         # go through the lines in the data list
         for d in data:
-            # for each thing in the line, do type validation and add it
-            for item in d:
-                values.append(item)
+            if len(d) > 0:
+                # for each thing in the line, do type validation and add it
+                for item in d:
+                    values.append(item.strip())
 
-            # create the query string
-            val_str = '(' + ' , '.join(values) + ' ); '
-            query = query_start + val_str
+                # create the query string
+                val_str = '(' + ' , '.join(values) + ' ); '
+                query = query_start + val_str
 
-            # change this to an execution of the query
-            queries.append(query)
+                # change this to an execution of the query
+                queries.append(query)
 
             values = []
 
