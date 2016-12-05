@@ -21,13 +21,9 @@ CREATE TABLE IF NOT EXISTS `Agreement` (
   `cost` INT NULL,
   `endDate` DATE NULL,
   `Office_Name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`ident`, `Office_Name`),
-  INDEX `fk_Agreement_Office1_idx` (`Office_Name` ASC),
-  CONSTRAINT `fk_Agreement_Office1`
-    FOREIGN KEY (`Office_Name`)
-    REFERENCES `Office` (`Name`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  PRIMARY KEY (`ident`),
+  FOREIGN KEY (`Office_Name`)
+  REFERENCES `Office` (`Name`)
 );
 
 
@@ -51,16 +47,8 @@ CREATE TABLE IF NOT EXISTS `Agency_has_Agreement` (
   `Agency_agency_id` INT NOT NULL,
   `Agreement_ident` INT NOT NULL,
   PRIMARY KEY (`Agency_agency_id`, `Agreement_ident`),
-  INDEX `fk_Agency_has_Agreement_Agreement1_idx` (`Agreement_ident` ASC),
-  INDEX `fk_Agency_has_Agreement_Agency1_idx` (`Agency_agency_id` ASC),
-  CONSTRAINT `fk_Agency_has_Agreement_Agency1`
-    FOREIGN KEY (`Agency_agency_id`)
-    REFERENCES `Agency` (`agency_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Agency_has_Agreement_Agreement1`
-    FOREIGN KEY (`Agreement_ident`)
-    REFERENCES `Agreement` (`ident`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  FOREIGN KEY (`Agency_agency_id`)
+  REFERENCES `Agency` (`agency_id`),
+  FOREIGN KEY (`Agreement_ident`)
+  REFERENCES `Agreement` (`ident`)
 );
