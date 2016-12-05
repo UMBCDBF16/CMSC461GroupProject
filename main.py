@@ -81,15 +81,6 @@ class DBConnection():
             self.DB_CURSOR.execute(query)
 
 
-    def erase(self, table):
-        """
-        Deletes all records from table
-        Does not delete the tables schemea
-        input: string
-        output: None
-        """
-        self.DB_CURSOR.execute("DELETE * FROM ? ; ", table)
-
     def list_all_tables(self):
         self.DB_CURSOR.execute("SELECT name FROM sqlite_master WHERE type='table';")
         print(self.DB_CURSOR.fetchall())
@@ -137,8 +128,8 @@ class DBConnection():
         '''
         headers = ', '.join(self.col_names(table))
         print(table, "contains these fields: ", headers)
-        fields = input("Please enter the fields you wish to select (separated by ',') ")
-        condition = input("Please enter a condition ('NULL' to ommit WHERE clause) ")
+        fields = input("Please enter the fields you wish to select (separated by ',') or select everything with *\n")
+        condition = input("Please enter a condition ('NULL' to ommit WHERE clause)\n")
         if condition == "NULL":
             query = "SELECT " + fields + " FROM " + table
         else:
@@ -158,7 +149,7 @@ class ResponseHandler():
     def user_select_table(self, command):
         print("command is ", command)
         self.db_conn.list_all_tables()
-        table = input("Select the table that you would like to " +  str(command))
+        table = input("Select the table that you would like to " + str(command) + "\n")
         return table
 
     def respond_to(self, response):
@@ -168,19 +159,19 @@ class ResponseHandler():
         output: None
         """
         if response == "select":
-            table = self.user_select_table("select from")
+            table = self.user_select_table("select from\n")
             self.db_conn.select(table)
         elif response == "update":
-            table = self.user_select_table("update")
+            table = self.user_select_table("update\n")
             self.db_conn.update(table)
         elif response == "delete":
-            table = self.user_select_table("delete from")
+            table = self.user_select_table("delete from\n")
             self.db_conn.delete_relation(table)
         elif response == "erase":
-            table = self.user_select_table("erase")
+            table = self.user_select_table("erase\n")
             self.db_conn.erase(table)
         elif response == "bulk load":
-            csv_file = input("Enter the csv file you would like to load")
+            csv_file = input("Enter the csv file you would like to load\n")
             self.db_conn.bulk_load(csv_file)
 
 
