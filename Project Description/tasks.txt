@@ -1,9 +1,0 @@
-1. ERD DONE
-2. Schema DONE
-3. sql for tables DONE
-4. Program
-  1. bulk load data into tables from csv
-  2. erase tables
-  3. insert new record into tables
-  4. delete record from tables
-  5. select records from tables
