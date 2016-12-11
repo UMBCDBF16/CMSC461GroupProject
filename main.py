@@ -11,7 +11,7 @@ class DBConnection():
         :return: a valid connection object to a sqlite3 database
         """
         conn = sqlite3.connect(":memory:")
-        fd = open('univ.sql', 'r')
+        fd = open('create.sql', 'r')
         sqlFile = fd.read()
         sqlCommands = sqlFile.split(';')
 
@@ -19,13 +19,7 @@ class DBConnection():
         for command in sqlCommands:
             conn.execute(command)
         fd.close()
-        fd = open('load.sql', 'r')
-        sqlFile = fd.read()
-        sqlCommands = sqlFile.split(';')
 
-        # Execute every command from the input file
-        for command in sqlCommands:
-            conn.execute(command)
         return conn
 
     # parse the csv into data
@@ -97,7 +91,6 @@ class DBConnection():
         '''
         adds a new record to table
         '''
-        print(table)
         fields = tuple(self.col_names(table))
         print(table, "contains these fields: ", fields)
         entry = input("Please enter all values for new entry (separated by ',') ")
@@ -138,7 +131,10 @@ class DBConnection():
             query = "SELECT " + fields + " FROM " + table
         else:
             query = 'SELECT ' + fields + ' FROM ' + table + ' WHERE ' + condition
-        self.DB_CURSOR.execute(query)
+        try:
+            self.DB_CURSOR.execute(query)
+        except sqlite3.IntegrityError:
+            print("Entered wrong query going back to main menu")
         print(self.DB_CURSOR.fetchall())
 
 
