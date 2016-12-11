@@ -6,6 +6,12 @@ class DBConnection():
         self.DB_CONN = self.get_connection()
         self.DB_CURSOR = self.DB_CONN.cursor()
 
+    def erase(self, table):
+        query= "DELETE FROM " + table
+        self.DB_CURSOR.execute(query)
+        print("Contents of " + table + " deleted")
+        return
+
     def get_connection(self):
         """
         :return: a valid connection object to a sqlite3 database
@@ -147,7 +153,7 @@ class ResponseHandler():
         self.db_conn = DBConnection()
 
     def user_select_table(self, command):
-        print("command is ", command)
+        print("command is", command)
         self.db_conn.list_all_tables()
         table = input("Select the table that you would like to " + str(command) + "\n")
         return table
