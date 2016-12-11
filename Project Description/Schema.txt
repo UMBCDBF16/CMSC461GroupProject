@@ -1,13 +1,13 @@
 ***First normal form***
 Office(-name-, city, sq_ft)
-Agreement(-ident-, cost, endDate)
+Agreement(-ident-, cost, endDate, Office_Name)
 Agency(-agency_id-, name, address, city, phone)
 RentParties(-agency_id-, -agreement_id-)
 
 
 ***Second normal form***
 Office(-name-, city, sq_ft)
-Agreement(-ident-, cost, endDate)
+Agreement(-ident-, cost, endDate, Office_Name)
 Agency(-agency_id-, name, address, city, phone)
 RentParties(-agency_id-, -agreement_id-)
 
@@ -16,7 +16,7 @@ RentParties(-agency_id-, -agreement_id-)
 
 ***Third normal form***
 Office(-name-, city, sq_ft)
-Agreement(-ident-, cost, endDate)
+Agreement(-ident-, cost, endDate, Office_Name)
 Agency(-agency_id-, name, address, city, phone)
 RentParties(-agency_id-, -agreement_id-)
 
