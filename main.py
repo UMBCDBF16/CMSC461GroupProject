@@ -87,7 +87,7 @@ class DBConnection():
         self.DB_CURSOR.execute("select * from {tbl}". format(tbl=table))
         return [member[0] for member in self.DB_CURSOR.description]
 
-    def update(self, table):
+    def insert(self, table):
         '''
         adds a new record to table
         '''
@@ -161,9 +161,9 @@ class ResponseHandler():
         if response == "select":
             table = self.user_select_table("select from\n")
             self.db_conn.select(table)
-        elif response == "update":
-            table = self.user_select_table("update\n")
-            self.db_conn.update(table)
+        elif response == "insert":
+            table = self.user_select_table("insert into\n")
+            self.db_conn.insert(table)
         elif response == "delete":
             table = self.user_select_table("delete from\n")
             self.db_conn.delete_relation(table)
@@ -177,10 +177,10 @@ class ResponseHandler():
 
 def main():
     response_handler = ResponseHandler()
-    response = input("You can update, delete, select, erase, bulk load, or quit\n")
+    response = input("You can insert, delete, select, erase, bulk load, or quit\n")
     while response != "quit":
         response_handler.respond_to(response)
-        response = input("You can update, delete, select, erase, bulk load, or quit\n")
+        response = input("You can insert, delete, select, erase, bulk load, or quit\n")
     print("Thank you for using the database")
 
 main()
