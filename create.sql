@@ -5,7 +5,7 @@
 -- -----------------------------------------------------
 -- Table `Office`
 -- -----------------------------------------------------
-PRAGMA foreign_keys = ON;
+--PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS `Office` (
   `Name` VARCHAR(45) NOT NULL,
