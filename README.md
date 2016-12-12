@@ -6,6 +6,9 @@ Run main.py
 No external connections or internal databases are needed as this is run on a RAM Database.
 However, this also means that the database is not persistant between runs.
 Script to create the schema is automatically run when the program is opened without user interaction.
+The user is not given control over the schema that is run in the database.
+Forign keys can be turned on by uncommenting the "pragma" line: disabled for ease of loading
+tables into database through csv in any order.
 
 *********
 
