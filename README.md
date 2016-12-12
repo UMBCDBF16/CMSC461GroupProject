@@ -14,14 +14,10 @@ tables into database through csv in any order.
 *********
 
 ###Format for the csv files  
-line 1: tablename  
-other lines: attributes,separated,by,commas
+**line 1**: tablename  
+**other lines**: attributes,separated,by,commas
 
 NOTE: Please make sure that there are not extraneous punctuation marks, especially apostrophes(') in this file, and that non-numeric data is encased in single quotes (This includes dates).
-
-###Descriptions of files in the repo:
-
-
 
 ###Notes on Functions:
 
