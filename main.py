@@ -7,7 +7,7 @@ class DBConnection():
         self.DB_CURSOR = self.DB_CONN.cursor()
 
     def erase(self, table):
-        query= "DELETE FROM " + table
+        query = "DELETE FROM " + table
         self.DB_CURSOR.execute(query)
         print("Contents of " + table + " deleted")
         return
