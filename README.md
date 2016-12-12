@@ -13,11 +13,11 @@ tables into database through csv in any order.
 *********
 
 Input:
-Format for the csv files
-line 1: tablename
+Format for the csv files  
+line 1: tablename  
 other lines: attributes,separated,by,commas
 
-NOTE: Please make sure that there are not extraneous punctuation marks, especially apostrophe's in this file
+NOTE: Please make sure that there are not extraneous punctuation marks, especially apostrophes(') in this file
 
 Descriptions of files in the repo:
 
